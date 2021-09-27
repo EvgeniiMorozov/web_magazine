@@ -8,6 +8,9 @@ django = "*"
 pillow = "*"
 
 [dev-packages]
+mypy = "*"
+flake8 = "*"
+black = "==21.9b0"
 
 [requires]
 python_version = "3.9"
