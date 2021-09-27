@@ -15,6 +15,7 @@ User = get_user_model()
 # Customer
 # Specification (product info)
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name="Имя Категории")
     slug = models.SlugField(unique=True)
@@ -36,6 +37,30 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Notebook(Product):
+    diagonal = models.CharField(max_length=255, verbose_name="Диагональ экрана")
+    display = models.CharField(max_length=255, verbose_name="Тип дисплея")
+    cpu = models.CharField(max_length=255, verbose_name="Процессор")
+    ram = models.CharField(max_length=255, verbose_name="Оперативная память")
+    video = models.CharField(max_length=255, verbose_name="Видеокарта")
+
+    def __str__(self):
+        return f"{self.category.name} : {self.title}"
+
+
+class Smartphone(Product):
+    diagonal = models.CharField(max_length=255, verbose_name="Диагональ экрана")
+    display = models.CharField(max_length=255, verbose_name="Тип дисплея")
+    resolution = models.CharField(max_length=255, verbose_name="Разрешение экрана")
+    batt_capacity = models.CharField(max_length=255, verbose_name="Объем батареи")
+    ram = models.CharField(max_length=255, verbose_name="Оперативная память")
+    rom = models.CharField(max_length=255, verbose_name="Встроенная память")
+    main_cam_mp = models.CharField(max_length=255, verbose_name="Разрешение основной камеры")
+
+    def __str__(self):
+        return f"{self.category.name} : {self.title}"
 
 
 class CartProduct(models.Model):
