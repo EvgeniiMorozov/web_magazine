@@ -11,6 +11,9 @@ pillow = "*"
 mypy = "*"
 flake8 = "*"
 black = "==21.9b0"
+flake8-django = "*"
+flake8-django-migrations = "*"
+django-stubs = "*"
 
 [requires]
 python_version = "3.9"
