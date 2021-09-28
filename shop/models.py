@@ -13,7 +13,7 @@ from PIL import Image
 User = get_user_model()
 
 
-def get_product_url(obj, view_name, model_name):
+def get_product_url(obj, view_name):
     ct_model = obj.__class__._meta.model_name
     return reverse(view_name, kwargs={"ct_model": ct_model, "slug": obj.slug})
 
