@@ -80,30 +80,30 @@ class Product(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        # image = self.image
-        # img = Image.open(image)
-        # min_height, min_width = self.MIN_RESOLUTION
-        # max_height, max_width = self.MAX_RESOLUTION
-
-        # # Проверка загружаемого изображения на минимальное и максимальное разрешение
-        # if img.height < min_height or img.width < min_width:
-        #     raise MinRsolutionErrorException("Разрешение изображения меньше минимального!")
-        # if img.height > max_height or img.width > max_width:
-        #     raise MaxRsolutionErrorException("Разрешение изображения больше максимального!")
-
-        # Принудительное форматирование изображения
         image = self.image
         img = Image.open(image)
-        # Убираем альфа-канал (RGBA -> RGB)
-        new_img = img.convert("RGB")
-        resized_mew_img = new_img.resize(self.MAX_RESOLUTION, Image.ANTIALIAS)
-        file_stream = BytesIO()
-        resized_mew_img.save(file_stream, "JPEG", quality=90)
-        file_stream.seek(0)
-        name = "{}.{}".format(*self.image.name.split("."))
-        self.image = InMemoryUploadedFile(
-            file_stream, "ImageField", name, "image/jpeg", sys.getsizeof(file_stream), None
-        )
+        min_height, min_width = self.MIN_RESOLUTION
+        max_height, max_width = self.MAX_RESOLUTION
+
+        # Проверка загружаемого изображения на минимальное и максимальное разрешение
+        if img.height < min_height or img.width < min_width:
+            raise MinRsolutionErrorException("Разрешение изображения меньше минимального!")
+        if img.height > max_height or img.width > max_width:
+            raise MaxRsolutionErrorException("Разрешение изображения больше максимального!")
+
+        # # Принудительное форматирование изображения
+        # image = self.image
+        # img = Image.open(image)
+        # # Убираем альфа-канал (RGBA -> RGB)
+        # new_img = img.convert("RGB")
+        # resized_mew_img = new_img.resize(self.MAX_RESOLUTION, Image.ANTIALIAS)
+        # file_stream = BytesIO()
+        # resized_mew_img.save(file_stream, "JPEG", quality=90)
+        # file_stream.seek(0)
+        # name = "{}.{}".format(*self.image.name.split("."))
+        # self.image = InMemoryUploadedFile(
+        #     file_stream, "ImageField", name, "image/jpeg", sys.getsizeof(file_stream), None
+        # )
 
         super().save(*args, **kwargs)
 
