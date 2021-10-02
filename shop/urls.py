@@ -1,5 +1,6 @@
-from shop.views import ProductDetailView, test_view
 from django.urls import path
+
+from shop.views import ProductDetailView, test_view
 
 urlpatterns = [
     path("", test_view, name="base"),

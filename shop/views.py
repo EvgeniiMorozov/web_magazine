@@ -9,7 +9,6 @@ def test_view(request):
 
 
 class ProductDetailView(DetailView):
-
     CT_MODEL_MODEL_CLASS = {"notebook": Notebook, "smartphone": Smartphone}
 
     def dispatch(self, request, *args, **kwargs):
