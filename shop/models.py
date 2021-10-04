@@ -28,7 +28,10 @@ class LatestProductsManager:
         products = []
         ct_models = ContentType.objects.filter(model__in=args)
         for ct_model in ct_models:
-            model_products = ct_model.model_class()._base_manager.all().order_by("-id")[:5]
+
+            model_products = (
+                ct_model.model_class()._base_manager.all().order_by("-id")[:5]
+            )
             products.extend(model_products)
         if with_respect_to:
             ct_model = ContentType.objects.filter(model=with_respect_to)
@@ -147,7 +150,7 @@ class CartProduct(models.Model):
     final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая цена")
 
     def __str__(self):
-        return f"Продукт: {self.product.title} (для корзины)"
+        return f"Продукт: {self.content_object.title} (для корзины)"
 
 
 class Cart(models.Model):
@@ -156,7 +159,13 @@ class Cart(models.Model):
     # total_products - чтоб показывать корректное количество товаров в корзине
     # 2 смартфона и 3 ноутбука - 2 разных продукта и 5 товаров
     total_products = models.PositiveIntegerField(default=0)
-    final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая цена")
+
+    final_price = models.DecimalField(
+        max_digits=9, decimal_places=2, verbose_name="Общая цена"
+    )
+    in_order = models.BooleanField(default=False)
+    for_anonymous_user = models.BooleanField(default=False)
+
 
     def __str__(self):
         return str(self.pk)
