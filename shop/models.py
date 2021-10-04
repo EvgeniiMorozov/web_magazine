@@ -8,6 +8,10 @@ from django.urls import reverse
 User = get_user_model()
 
 
+def get_models_for_count(*model_names):
+    return [models.Count(model_name) for model_name in model_names]
+
+
 def get_product_url(obj, view_name):
     ct_model = obj.__class__._meta.model_name
     return reverse(view_name, kwargs={"ct_model": ct_model, "slug": obj.slug})
@@ -28,9 +32,7 @@ class LatestProductsManager:
         products = []
         ct_models = ContentType.objects.filter(model__in=args)
         for ct_model in ct_models:
-            model_products = (
-                ct_model.model_class()._base_manager.all().order_by("-id")[:5]
-            )
+            model_products = ct_model.model_class()._base_manager.all().order_by("-id")[:5]
             products.extend(model_products)
         if with_respect_to:
             ct_model = ContentType.objects.filter(model=with_respect_to)
@@ -47,9 +49,23 @@ class LatestProducts:
     objects = LatestProductsManager()
 
 
+class CategoryManager(models.Manager):
+
+    CATEGORY_NAME_COUNT_NAME = {"Ноутбуки": "notebook__count", "Смартфоны": "smartphone__count"}
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+    def get_categories_for_lef_sidebar(self):
+        models = get_models_for_count("notebook", "smartphone")
+        qs = list(self.get_queryset().annotate(*models).values())
+        return [dict(name=c["name"], slug=c["slug"], count=c[self.CATEGORY_NAME_COUNT_NAME[c["name"]]]) for c in qs]
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name="Имя Категории")
     slug = models.SlugField(unique=True)
+    objects = CategoryManager()
 
     def __str__(self):
         return self.name
@@ -159,9 +175,7 @@ class Cart(models.Model):
     # 2 смартфона и 3 ноутбука - 2 разных продукта и 5 товаров
     total_products = models.PositiveIntegerField(default=0)
 
-    final_price = models.DecimalField(
-        max_digits=9, decimal_places=2, verbose_name="Общая цена"
-    )
+    final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая цена")
     in_order = models.BooleanField(default=False)
     for_anonymous_user = models.BooleanField(default=False)
 
