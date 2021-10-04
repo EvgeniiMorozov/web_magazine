@@ -87,7 +87,7 @@
 {#                        </li>#}
                         {% for category in categories %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">{{ category.name }} ({{ category.count }})</a>
+                            <a class="nav-link" href="{{category.url}}">{{ category.name }} ({{ category.count }})</a>
                         </li>
                         {% endfor %}
                     </ul>
