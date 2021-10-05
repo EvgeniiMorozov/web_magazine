@@ -49,6 +49,27 @@ class LatestProducts:
     objects = LatestProductsManager()
 
 
+# class CategoryManager(models.Manager):
+
+#     CATEGORY_NAME_COUNT_NAME = {"Ноутбуки": "notebook__count", "Смартфоны": "smartphone__count"}
+
+#     def get_queryset(self):
+#         return super().get_queryset()
+
+#     def get_categories_for_lef_sidebar(self):
+#         models = get_models_for_count("notebook", "smartphone")
+#         qs = list(self.get_queryset().annotate(*models))
+
+#         return [
+#             dict(
+#                 name=c.name,
+#                 url=c.get_absolute_url(),
+#                 count=getattr(c, self.CATEGORY_NAME_COUNT_NAME[c.name]),
+#             )
+#             for c in qs
+#         ]
+
+
 class CategoryManager(models.Manager):
 
     CATEGORY_NAME_COUNT_NAME = {"Ноутбуки": "notebook__count", "Смартфоны": "smartphone__count"}
@@ -59,14 +80,11 @@ class CategoryManager(models.Manager):
     def get_categories_for_left_sidebar(self):
         models = get_models_for_count("notebook", "smartphone")
         qs = list(self.get_queryset().annotate(*models))
-        return [
-            dict(
-                name=c.name,
-                url=c.get_absolute_url(),
-                count=getattr(c, self.CATEGORY_NAME_COUNT_NAME[c.name]),
-            )
+        data = [
+            dict(name=c.name, url=c.get_absolute_url(), count=getattr(c, self.CATEGORY_NAME_COUNT_NAME[c.name]))
             for c in qs
         ]
+        return data
 
 
 class Category(models.Model):

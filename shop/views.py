@@ -1,20 +1,20 @@
 from django.shortcuts import render
 from django.views.generic import DetailView, View
 
-from shop.models import Notebook, Smartphone, Category
+from shop.models import Notebook, Smartphone, Category, CategoryManager
 from shop.mixins import CategoryDetailMixin
 
 
 class BaseView(View):
 
     def get(self, request, *args, **kwargs):
-        categories = Category.objects.get_categories_for_lef_sidebar()
+        categories = Category.objects.get_categories_for_left_sidebar()
         return render(request, "shop/base.html", {"categories": categories})
 
 
-# def test_view(request):
-#     categories = Category.objects.get_categories_for_lef_sidebar()
-#     return render(request, "shop/base.html", {"categories": categories})
+def test_view(request):
+    categories = Category.objects.get_categories_for_left_sidebar()
+    return render(request, "shop/base.html", {"categories": categories})
 
 
 class ProductDetailView(CategoryDetailMixin, DetailView):
