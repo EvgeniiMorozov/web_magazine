@@ -59,11 +59,14 @@ class CategoryManager(models.Manager):
     def get_categories_for_left_sidebar(self):
         models = get_models_for_count("notebook", "smartphone")
         qs = list(self.get_queryset().annotate(*models))
-        data = [
-            dict(name=c.name, url=c.get_absolute_url(), count=getattr(c, self.CATEGORY_NAME_COUNT_NAME[c.name]))
+        return [
+            dict(
+                name=c.name,
+                url=c.get_absolute_url(),
+                count=getattr(c, self.CATEGORY_NAME_COUNT_NAME[c.name]),
+            )
             for c in qs
         ]
-        return data
 
 
 class Category(models.Model):
@@ -185,18 +188,23 @@ class Cart(models.Model):
     # total_products - чтоб показывать корректное количество товаров в корзине
     # 2 смартфона и 3 ноутбука - 2 разных продукта и 5 товаров
     total_products = models.PositiveIntegerField(default=0)
-    final_price = models.DecimalField(max_digits=9, decimal_places=2,default=0 , verbose_name="Общая цена")
+    final_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, verbose_name="Общая цена")
     in_order = models.BooleanField(default=False)
     for_anonymous_user = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.pk)
 
+    def save(self, *args, **kwargs):
+        cart_data = self.products.aggregate(models.Sum("final_price"), models.Count("id"))
+        print((cart_data))
+        super().save(*args, **kwargs)
+
 
 class Customer(models.Model):
     user = models.ForeignKey(User, verbose_name="Покупатель", on_delete=models.CASCADE)
     phone = models.CharField(max_length=20, verbose_name="Номер телефона", null=True, blank=True)
-    address = models.CharField(max_length=255, verbose_name="Адрес",  null=True, blank=True)
+    address = models.CharField(max_length=255, verbose_name="Адрес", null=True, blank=True)
 
     def __str__(self):
         return f"Покупатель: {self.user.first_name} {self.user.last_name}"
