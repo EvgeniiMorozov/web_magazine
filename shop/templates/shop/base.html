@@ -82,13 +82,14 @@
             <div class="row">
                 <div class="col-md-3">
                     <ul class="nav flex-column">
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link active" aria-current="page" href="#">Active</a>#}
-{#                        </li>#}
+                        {#                        <li class="nav-item">#}
+                        {#                            <a class="nav-link active" aria-current="page" href="#">Active</a>#}
+                        {#                        </li>#}
                         {% for category in categories %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{category.url}}">{{ category.name }} ({{ category.count }})</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ category.url }}">{{ category.name }}
+                                    ({{ category.count }})</a>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -96,20 +97,31 @@
                     {% block content %}
                         Content block
                     {% endblock %}
-                    {#                    <div class="card h-100">#}
-                    {#                        <img src="..." class="card-img-top" alt="...">#}
-                    {#                        <div class="card-body">#}
-                    {#                            <h5 class="card-title">Card title</h5>#}
-                    {#                            <p class="card-text">This is a wider card with supporting text below as a natural#}
-                    {#                                lead-in to#}
-                    {#                                additional content. This card has even longer content than the first to show that#}
-                    {#                                equal#}
-                    {#                                height action.</p>#}
-                    {#                        </div>#}
-                    {#                        <div class="card-footer">#}
-                    {#                            <small class="text-muted">Last updated 3 mins ago</small>#}
-                    {#                        </div>#}
-                    {#                    </div>#}
+                    <!----- Блок карточек ----->
+                    <div class="row">
+                        {% for product in products %}
+
+                            <div class="col-lg-4 col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <img src="{{ product.image.url }}" class="card-img-top"
+                                             alt="{{ product.title }}">
+                                    </a>
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                        </h4>
+                                        <h5>{{ product.price }} руб.</h5>
+                                    </div>
+                                    {#                                <div class="card-footer">#}
+                                    {#                                    <small class="text-muted">Last updated 3 mins ago</small>#}
+                                    {#                                </div>#}
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                    <!-----Конец блока карточек ----->
                 </div>
             </div>
         </div>
