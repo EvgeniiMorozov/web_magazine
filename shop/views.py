@@ -58,9 +58,10 @@ class AddToCartView(View):
         content_type = ContentType.objects.get(model=ct_model)
         product = content_type.model_class().objects.get(slug=product_slug)
         cart_product, created = CartProduct.objects.get_or_create(
-            user=cart.owner, cart=cart, content_type=content_type, object_id=product.id, final_price=product.price
+            user=cart.owner, cart=cart, content_type=content_type, object_id=product.id
         )
-        cart.products.add(cart_product)
+        if created:
+            cart.products.add(cart_product)
         return HttpResponseRedirect("/cart/")
 
 

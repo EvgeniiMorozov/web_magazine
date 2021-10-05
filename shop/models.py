@@ -80,7 +80,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     MIN_RESOLUTION = (400, 400)
-    MAX_RESOLUTION = (800, 800)
+    MAX_RESOLUTION = (1200, 1200)
     MAX_IMAGE_SIZE = 3145728
 
     class Meta:
@@ -173,6 +173,10 @@ class CartProduct(models.Model):
 
     def __str__(self):
         return f"Продукт: {self.content_object.title} (для корзины)"
+
+    def save(self, *args, **kwargs):
+        self.final_price = self.qty * self.content_object.price
+        super().save(*args, **kwargs)
 
 
 class Cart(models.Model):
