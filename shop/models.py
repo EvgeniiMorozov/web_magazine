@@ -180,13 +180,12 @@ class CartProduct(models.Model):
 
 
 class Cart(models.Model):
-    owner = models.ForeignKey("Customer", verbose_name="Владелец", on_delete=models.CASCADE)
+    owner = models.ForeignKey("Customer", verbose_name="Владелец", null=True, on_delete=models.CASCADE)
     products = models.ManyToManyField(CartProduct, blank=True, related_name="related_cart")
     # total_products - чтоб показывать корректное количество товаров в корзине
     # 2 смартфона и 3 ноутбука - 2 разных продукта и 5 товаров
     total_products = models.PositiveIntegerField(default=0)
-
-    final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая цена")
+    final_price = models.DecimalField(max_digits=9, decimal_places=2,default=0 , verbose_name="Общая цена")
     in_order = models.BooleanField(default=False)
     for_anonymous_user = models.BooleanField(default=False)
 
@@ -196,8 +195,8 @@ class Cart(models.Model):
 
 class Customer(models.Model):
     user = models.ForeignKey(User, verbose_name="Покупатель", on_delete=models.CASCADE)
-    phone = models.CharField(max_length=20, verbose_name="Номер телефона")
-    address = models.CharField(max_length=255, verbose_name="Адрес")
+    phone = models.CharField(max_length=20, verbose_name="Номер телефона", null=True, blank=True)
+    address = models.CharField(max_length=255, verbose_name="Адрес",  null=True, blank=True)
 
     def __str__(self):
         return f"Покупатель: {self.user.first_name} {self.user.last_name}"
