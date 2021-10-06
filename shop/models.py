@@ -172,7 +172,7 @@ class CartProduct(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
     qty = models.PositiveIntegerField(default=1)
-    final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая цена", null=True)
+    final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Общая цена')
 
     def __str__(self):
         return f"Продукт: {self.content_object.title} (для корзины)"
@@ -188,7 +188,7 @@ class Cart(models.Model):
     # total_products - чтоб показывать корректное количество товаров в корзине
     # 2 смартфона и 3 ноутбука - 2 разных продукта и 5 товаров
     total_products = models.PositiveIntegerField(default=0)
-    final_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, verbose_name="Общая цена", null=True)
+    final_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, verbose_name="Общая цена")
     in_order = models.BooleanField(default=False)
     for_anonymous_user = models.BooleanField(default=False)
 

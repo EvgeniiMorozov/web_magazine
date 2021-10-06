@@ -26,7 +26,13 @@
                          alt="{{ item.content_object.title }}"/>
                 </td>
                 <td>{{ item.content_object.price }} руб.</td>
-                <td>{{ item.qty }}</td>
+                <td>
+{#                  {{ item.qty }}  #}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="number" value="{{ item.qty }}">
+                    </form>
+                </td>
                 <td>{{ item.final_price }} руб.</td>
                 <td>
                     <a href="{% url 'delete_from_cart' ct_model=item.content_object.get_model_name slug=item.content_object.slug %}">
