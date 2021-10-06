@@ -125,8 +125,10 @@ class Product(models.Model):
         # self.image = InMemoryUploadedFile(
         #     file_stream, "ImageField", name, "image/jpeg", sys.getsizeof(file_stream), None
         # )
-
         super().save(*args, **kwargs)
+
+    def get_model_name(self):
+        return self.__class__.__name__.lower()
 
 
 class Notebook(Product):
@@ -167,7 +169,6 @@ class CartProduct(models.Model):
         on_delete=models.CASCADE,
         related_name="related_products",
     )
-    # product = models.ForeignKey(Product, verbose_name="Продукт", on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
