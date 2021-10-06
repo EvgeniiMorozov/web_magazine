@@ -1,6 +1,5 @@
-from django.http import request
-from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import View
+from django.views.generic.detail import SingleObjectMixin
 
 from shop.models import Category, Cart, Customer
 

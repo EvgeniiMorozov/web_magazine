@@ -3,13 +3,12 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import DetailView, View
 
-from shop.models import Notebook, Smartphone, Category, LatestProducts, Cart, Customer, CartProduct
 from shop.mixins import CategoryDetailMixin, CartMixin
+from shop.models import Notebook, Smartphone, Category, LatestProducts, CartProduct
 
 
 class BaseView(CartMixin, View):
     def get(self, request, *args, **kwargs):
-
         categories = Category.objects.get_categories_for_left_sidebar()
         products = LatestProducts.objects.get_products_for_main_page(
             "notebook", "smartphone", with_respect_to="smartphone"
@@ -74,6 +73,7 @@ class DeleteFromCartView(CartMixin, View):
             user=self.cart.owner, cart=self.cart, content_type=content_type, object_id=product.id
         )
         self.cart.products.remove(cart_product)
+        cart_product.delete()
         self.cart.save()
         return HttpResponseRedirect("/cart/")
 

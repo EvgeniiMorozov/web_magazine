@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <title>{% block title %}Online Store{% endblock %}</title>
     <style>
         .bd-placeholder-img {
@@ -28,42 +28,42 @@
 <body>
 
 
-    {% include "shop/_inc/_header_navbar.html" %}
-    <div class="container">
-        <main>
+{% include "shop/_inc/_header_navbar.html" %}
+<div class="container">
+    <main>
 
-            <div class="carousel__block">
-                {% include "shop/_inc/_carousel.html" %}
-            </div>
+        <div class="carousel__block">
+            {% include "shop/_inc/_carousel.html" %}
+        </div>
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <ul class="nav flex-column">
-                            {#                        <li class="nav-item">#}
-                            {#                            <a class="nav-link active" aria-current="page" href="#">Active</a>#}
-                            {#                        </li>#}
-                            {% for category in categories %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="nav flex-column">
+                        {#                        <li class="nav-item">#}
+                        {#                            <a class="nav-link active" aria-current="page" href="#">Active</a>#}
+                        {#                        </li>#}
+                        {% for category in categories %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ category.url }}">{{ category.name }}
                                     ({{ category.count }})</a>
                             </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="col-md-9">
-                        {% block content %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-9">
+                    {% block content %}
                         Content block
-                        {% endblock %}
-                        <!--- Блок карточек -->
-                        <div class="row">
-                            {% for product in products %}
+                    {% endblock %}
+                    <!--- Блок карточек -->
+                    <div class="row">
+                        {% for product in products %}
 
                             <div class="col-lg-4 col-md-4 mb-4">
                                 <div class="card h-100">
                                     <a href="{{ product.get_absolute_url }}">
                                         <img src="{{ product.image.url }}" class="card-img-top"
-                                            alt="{{ product.title }}">
+                                             alt="{{ product.title }}">
                                     </a>
                                     <div class="card-body">
                                         <h4 class="card-title">
@@ -77,35 +77,35 @@
                                 </div>
                             </div>
 
-                            {% endfor %}
-                        </div>
-                        <!---Конец блока карточек -->
+                        {% endfor %}
                     </div>
+                    <!---Конец блока карточек -->
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
 
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0 text-muted">&copy; 2021 Company, Inc</p>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <p class="col-md-4 mb-0 text-muted">&copy; 2021 Company, Inc</p>
 
-            <a href="/"
-                class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32">
-                    <use xlink:href="#bootstrap" />
-                </svg>
-            </a>
+        <a href="/"
+           class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#bootstrap"/>
+            </svg>
+        </a>
 
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-            </ul>
-        </footer>
-    </div>
+        <ul class="nav col-md-4 justify-content-end">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+        </ul>
+    </footer>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
