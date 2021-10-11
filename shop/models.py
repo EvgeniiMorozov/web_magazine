@@ -162,17 +162,12 @@ class Smartphone(Product):
 
 class CartProduct(models.Model):
     user = models.ForeignKey("Customer", verbose_name="Покупатель", on_delete=models.CASCADE)
-    cart = models.ForeignKey(
-        "Cart",
-        verbose_name="Корзина",
-        on_delete=models.CASCADE,
-        related_name="related_products",
-    )
+    cart = models.ForeignKey("Cart", verbose_name="Корзина", on_delete=models.CASCADE, related_name="related_products")
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
     qty = models.PositiveIntegerField(default=1)
-    final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Общая цена')
+    final_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая цена")
 
     def __str__(self):
         return f"Продукт: {self.content_object.title} (для корзины)"
@@ -185,8 +180,6 @@ class CartProduct(models.Model):
 class Cart(models.Model):
     owner = models.ForeignKey("Customer", verbose_name="Владелец", null=True, on_delete=models.CASCADE)
     products = models.ManyToManyField(CartProduct, blank=True, related_name="related_cart")
-    # total_products - чтоб показывать корректное количество товаров в корзине
-    # 2 смартфона и 3 ноутбука - 2 разных продукта и 5 товаров
     total_products = models.PositiveIntegerField(default=0)
     final_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, verbose_name="Общая цена")
     in_order = models.BooleanField(default=False)
@@ -195,13 +188,13 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.pk)
 
-    def save(self, *args, **kwargs):
-        cart_data = self.products.aggregate(models.Sum("final_price"), models.Count("id"))
-        if not cart_data.get("final_price__sum"):
-            self.final_price = 0
-        self.final_price = cart_data["final_price__sum"]
-        self.total_products = cart_data["id__count"]
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     cart_data = self.products.aggregate(models.Sum("final_price"), models.Count("id"))
+    #     if not cart_data.get("final_price__sum"):
+    #         self.final_price = 0
+    #     self.final_price = cart_data["final_price__sum"]
+    #     self.total_products = cart_data["id__count"]
+    #     super().save(*args, **kwargs)
 
 
 class Customer(models.Model):
