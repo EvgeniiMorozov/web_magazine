@@ -5,8 +5,7 @@ from shop.models import Category, Cart, Customer, Notebook, Smartphone
 
 
 class CategoryDetailMixin(SingleObjectMixin):
-
-    CATEGORY_SLUG_TO_PRODUCT_MODEL = {"notebooks": Notebook, "smartphone": Smartphone}
+    CATEGORY_SLUG_TO_PRODUCT_MODEL = {"notebooks": Notebook, "smartphones": Smartphone}
 
     def get_context_data(self, **kwargs):
         if isinstance(self.get_object(), Category):
