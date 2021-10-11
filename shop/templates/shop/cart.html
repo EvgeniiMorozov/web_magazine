@@ -1,11 +1,9 @@
 {% extends "shop/base.html" %}
 
-{% block title %} Cart :: {{ super.title }} {% endblock %}
+{% block title %} Cart :: {{ block.super }} {% endblock %}
 
 {% block content %}
-    <h3 class="text-center mt-5 mb-5">
-        Ваша корзина {% if not cart.product.count %}пуста{% endif %}
-    </h3>
+    <h3 class="text-center mt-5 mb-5">Ваша корзина {% if not cart.products.count %}пуста{% endif %}</h3>
     {% if messages %}
 
         {% for message in messages %}
