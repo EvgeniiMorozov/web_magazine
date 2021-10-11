@@ -111,19 +111,6 @@ class Product(models.Model):
         if img_height > max_height or img_width > max_width:
             raise MaxResolutionErrorException("Разрешение изображения больше максимального!")
 
-        # # Принудительное форматирование изображения
-        # image = self.image
-        # img = Image.open(image)
-        # # Убираем альфа-канал (RGBA -> RGB)
-        # new_img = img.convert("RGB")
-        # resized_mew_img = new_img.resize(self.MAX_RESOLUTION, Image.ANTIALIAS)
-        # file_stream = BytesIO()
-        # resized_mew_img.save(file_stream, "JPEG", quality=90)
-        # file_stream.seek(0)
-        # name = "{}.{}".format(*self.image.name.split("."))
-        # self.image = InMemoryUploadedFile(
-        #     file_stream, "ImageField", name, "image/jpeg", sys.getsizeof(file_stream), None
-        # )
         super().save(*args, **kwargs)
 
     def get_model_name(self):
@@ -178,23 +165,24 @@ class CartProduct(models.Model):
 
 
 class Cart(models.Model):
-    owner = models.ForeignKey("Customer", verbose_name="Владелец", null=True, on_delete=models.CASCADE)
+
+    owner = models.ForeignKey("Customer", null=True, verbose_name="Владелец", on_delete=models.CASCADE)
     products = models.ManyToManyField(CartProduct, blank=True, related_name="related_cart")
     total_products = models.PositiveIntegerField(default=0)
-    final_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, verbose_name="Общая цена")
+    final_price = models.DecimalField(max_digits=9, default=0, decimal_places=2, verbose_name="Общая цена")
     in_order = models.BooleanField(default=False)
     for_anonymous_user = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.pk)
 
-    # def save(self, *args, **kwargs):
-    #     cart_data = self.products.aggregate(models.Sum("final_price"), models.Count("id"))
-    #     if not cart_data.get("final_price__sum"):
-    #         self.final_price = 0
-    #     self.final_price = cart_data["final_price__sum"]
-    #     self.total_products = cart_data["id__count"]
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        cart_data = self.products.aggregate(models.Sum("final_price"), models.Count("id"))
+        if not cart_data.get("final_price__sum"):
+            self.final_price = 0
+        self.final_price = cart_data["final_price__sum"]
+        self.total_products = cart_data["id__count"]
+        super().save(*args, **kwargs)
 
 
 class Customer(models.Model):
