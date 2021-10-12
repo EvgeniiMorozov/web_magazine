@@ -176,14 +176,6 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.pk)
 
-    def save(self, *args, **kwargs):
-        cart_data = self.products.aggregate(models.Sum("final_price"), models.Count("id"))
-        if not cart_data.get("final_price__sum"):
-            self.final_price = 0
-        self.final_price = cart_data["final_price__sum"]
-        self.total_products = cart_data["id__count"]
-        super().save(*args, **kwargs)
-
 
 class Customer(models.Model):
     user = models.ForeignKey(User, verbose_name="Покупатель", on_delete=models.CASCADE)
@@ -223,7 +215,11 @@ class Order(models.Model):
 
     BUYING_TYPE_CHOICES = ((BUYING_TYPE_SELF, "Самовывоз"), (BUYING_TYPE_DELIVERY, "Доставка"))
 
-    customer = models.ForeignKey(Customer,related_name="related_orders", verbose_name="Покупатель", on_delete=models.CASCADE)
+    customer = models.ForeignKey(
+        Customer, related_name="related_orders", verbose_name="Покупатель", on_delete=models.CASCADE
+    )
+    #  related_name="related_cart",
+    cart = models.ForeignKey(Cart, verbose_name="Корзина", on_delete=models.CASCADE, null=True, blank=True)
     first_name = models.CharField(max_length=255, verbose_name="Имя")
     last_name = models.CharField(max_length=255, verbose_name="Фамилия")
     phone = models.CharField(max_length=20, verbose_name="Номер телефона")

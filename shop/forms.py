@@ -10,7 +10,7 @@ class OrderForm(forms.ModelForm):
         self.fields["order_date"].label = "Дата получения заказа"
 
     order_date = forms.DateField(widget=forms.TextInput(attrs={"type": "date"}))
-    comment = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
+    # comment = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
 
     class Meta:
         model = Order

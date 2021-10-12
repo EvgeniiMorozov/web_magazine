@@ -52,9 +52,23 @@
                     </ul>
                 </div>
                 <div class="col-md-9">
-                    {% block content %}
-                        Content block
-                    {% endblock %}
+
+                <!--- Блок вывода информации (messages) -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ message }}</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                <!--- Конец блока вывода информации (messages) -->
+
+                <!-- *** Блок "Content" *** -->
+                    {% block content %}{% endblock %}
+                <!-- *** Блок "Content" *** -->
+
                     <!--- Блок карточек -->
                     <div class="row">
                         {% for product in products %}
