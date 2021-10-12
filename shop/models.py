@@ -99,20 +99,20 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-    # def save(self, *args, **kwargs):
-    #     image = self.image
-    #     img = Image.open(image)
-    #     img_height, img_width = img.size
-    #     min_height, min_width = self.MIN_RESOLUTION
-    #     max_height, max_width = self.MAX_RESOLUTION
-    #
-    #     # Проверка загружаемого изображения на минимальное и максимальное разрешение
-    #     if img_height < min_height or img_width < min_width:
-    #         raise MinResolutionErrorException("Разрешение изображения меньше минимального!")
-    #     if img_height > max_height or img_width > max_width:
-    #         raise MaxResolutionErrorException("Разрешение изображения больше максимального!")
-    #
-    #     super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        image = self.image
+        img = Image.open(image)
+        img_height, img_width = img.size
+        min_height, min_width = self.MIN_RESOLUTION
+        max_height, max_width = self.MAX_RESOLUTION
+
+        # Проверка загружаемого изображения на минимальное и максимальное разрешение
+        if img_height < min_height or img_width < min_width:
+            raise MinResolutionErrorException("Разрешение изображения меньше минимального!")
+        if img_height > max_height or img_width > max_width:
+            raise MaxResolutionErrorException("Разрешение изображения больше максимального!")
+
+        super().save(*args, **kwargs)
 
     def get_model_name(self):
         return self.__class__.__name__.lower()
