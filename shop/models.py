@@ -4,6 +4,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -188,6 +189,7 @@ class Customer(models.Model):
     user = models.ForeignKey(User, verbose_name="Покупатель", on_delete=models.CASCADE)
     phone = models.CharField(max_length=20, verbose_name="Номер телефона", null=True, blank=True)
     address = models.CharField(max_length=255, verbose_name="Адрес", null=True, blank=True)
+    orders = models.ManyToManyField("Order", verbose_name="Заказы покупателя", related_name="related_customer")
 
     def __str__(self):
         return f"Покупатель: {self.user.first_name} {self.user.last_name}"
@@ -200,3 +202,39 @@ class Specification(models.Model):
 
     def __str__(self):
         return f"Характеристики для товара: {self.title}"
+
+
+class Order(models.Model):
+
+    STATUS_NEW = "new"
+    STATUS_IN_PROGRESS = "in_progress"
+    STATUS_READY = "is_ready"
+    STATUS_COMPLETED = "completed"
+
+    BUYING_TYPE_SELF = "self"
+    BUYING_TYPE_DELIVERY = "delivery"
+
+    STATUS_CHOICES = (
+        (STATUS_NEW, "Новый заказ"),
+        (STATUS_IN_PROGRESS, "Заказ в обработке"),
+        (STATUS_READY, "Заказ готов"),
+        (STATUS_COMPLETED, "Заказ выполнен"),
+    )
+
+    BUYING_TYPE_CHOICES = ((BUYING_TYPE_SELF, "Самовывоз"), (BUYING_TYPE_DELIVERY, "Доставка"))
+
+    customer = models.ForeignKey(Customer,related_name="related_orders", verbose_name="Покупатель", on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=255, verbose_name="Имя")
+    last_name = models.CharField(max_length=255, verbose_name="Фамилия")
+    phone = models.CharField(max_length=20, verbose_name="Номер телефона")
+    address = models.CharField(max_length=1024, verbose_name="Адрес", null=True, blank=True)
+    status = models.CharField(max_length=100, verbose_name="Статус заказа", choices=STATUS_CHOICES, default=STATUS_NEW)
+    buying_type = models.CharField(
+        max_length=100, verbose_name="Тип заказа", choices=BUYING_TYPE_CHOICES, default=BUYING_TYPE_SELF
+    )
+    comment = models.TextField(verbose_name="Комментарий к заказу", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now=True, verbose_name="Дата создания заказа")
+    order_date = models.DateTimeField(verbose_name="Дата получения заказа", default=timezone.now)
+
+    def __str__(self):
+        return str(self.id)
