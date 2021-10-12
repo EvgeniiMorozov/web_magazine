@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import DetailView, View
 
+from shop.forms import OrderForm
 from shop.mixins import CategoryDetailMixin, CartMixin
 from shop.models import Notebook, Smartphone, Category, LatestProducts, CartProduct
 
@@ -108,3 +109,11 @@ class CartView(CartMixin, View):
         categories = Category.objects.get_categories_for_left_sidebar()
         context = {"cart": self.cart, "categories": categories}
         return render(request, "shop/cart.html", context)
+
+
+class CheckoutView(CartMixin, View):
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.get_categories_for_left_sidebar()
+        form = OrderForm(request.POST or None)
+        context = {"cart": self.cart, "categories": categories, "form": form}
+        return render(request, "shop/checkout.html", context)
