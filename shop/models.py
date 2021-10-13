@@ -19,9 +19,6 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    MIN_RESOLUTION = (400, 400)
-    MAX_RESOLUTION = (1200, 1200)
-    MAX_IMAGE_SIZE = 3145728
 
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.CASCADE)
     title = models.CharField(max_length=255, verbose_name="Наименование")
