@@ -28,7 +28,7 @@
                         </li>
                         {% for category in categories %}
                         <li>
-                            <a class="dropdown-item" href="{{ category.url }}">
+                            <a class="dropdown-item" href="{{ category.get_absolute_url }}">
                                 {{ category.name }}
                             </a>
                         </li>
@@ -44,7 +44,7 @@
                 {% if not request.user.is_authenticated %}
                 <div class="btn-group" role="group">
                         <a class="btn btn-outline-dark" href="{% url 'login' %}">Авторизация</a>
-                        <a class="btn btn-outline-dark" href="#">Регистрация</a>
+                        <a class="btn btn-outline-dark" href="{% url 'registration' %}">Регистрация</a>
                 </div>
 
 
@@ -62,7 +62,7 @@
                         </a>
                     </span>
                 </span>
-
+                    <a href="{% url 'logout' %}">Выйти</a>
                 {% endif %}
                 <!-- *** Authorized_user block (End) *** -->
             </div>
