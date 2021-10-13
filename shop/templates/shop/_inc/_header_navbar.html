@@ -1,21 +1,88 @@
-<header class="bg-secondary bg-gradient bg-opacity-25">
-    <div class="container">
-        <div class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                <svg class="bi me-2" width="40" height="32">
-                    <use xlink:href="#bootstrap"/>
-                </svg>
-                <span class="fs-4">Simple header</span>
-            </a>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#">Online Store</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
 
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a href="{% url 'cart' %}" class="nav-link">
-                        Корзина <span class="badge rounded-pill bg-danger">{{ cart.products.count }}</span>
+                <!-- *** Dropdown menu (Start) *** -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Категории
                     </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                Все товары
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        {% for category in categories %}
+                        <li>
+                            <a class="dropdown-item" href="{{ category.get_absolute_url }}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {#                        <li><a class="dropdown-item" href="#!">Смартфоны</a></li>#}
+                    </ul>
                 </li>
-                {#        <li class="nav-item"><a href="#" class="nav-link">About</a></li>#}
+                <!-- *** Dropdown menu (End) *** -->
             </ul>
+
+            <div class="d-flex mx-3">
+                <!-- *** Not-authorized_user block (Start) *** -->
+                {% if not request.user.is_authenticated %}
+                <div class="btn-group" role="group">
+                        <a class="btn btn-outline-dark" href="#">Авторизация</a>
+                        <a class="btn btn-outline-dark" href="#">Регистрация</a>
+                </div>
+
+
+                {% endif %}
+                <!-- *** Not-authorized_user block (End) *** -->
+
+                <!-- *** Authorized_user block (Start) *** -->
+                {% if request.user.is_authenticated %}
+
+                <span class="navbar text-dark">
+                    Здравствуйте,&nbsp
+                    <span class="badge bg-warning">
+                        <a class="fs-6 fw-normal text-decoration-none" href="#">
+                            {{ request.user.username }}
+                        </a>
+                    </span>
+                </span>
+
+                {% endif %}
+                <!-- *** Authorized_user block (End) *** -->
+            </div>
+
+            <div class="d-flex">
+                <a href="{% url 'cart' %}" class="btn btn-outline-dark">
+                    <i class="bi bi-cart"></i>
+                    Корзина
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">{{ cart.products.count }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Online Store</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Тут могла быть ваша реклама</p>
         </div>
     </div>
 </header>
