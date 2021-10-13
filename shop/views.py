@@ -1,10 +1,11 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.db import transaction
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import DetailView, View
 
-from shop.forms import OrderForm
+from shop.forms import OrderForm, LoginForm
 from shop.mixins import CartMixin
 from shop.models import Category, CartProduct, Customer, Product
 from shop.utils import recalculate_cart
@@ -119,3 +120,22 @@ class MakeOrderView(CartMixin, View):
             messages.add_message(request, messages.INFO, "Спасибо за заказ! Мы с Вами свяжемся!")
             return HttpResponseRedirect("/")
         return HttpResponseRedirect("/checkout/")
+
+
+class LoginView(CartMixin, View):
+    def get(self, request, *args, **kwargs):
+        form = LoginForm(request.POST or None)
+        categories = Category.objects.all()
+        context = {"form": form, "categories": categories, "cart": self.cart}
+        return render(request, "shop/login.html", context)
+
+    def post(self, request, *args, **kwargs):
+        form = LoginForm(request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                return HttpResponseRedirect("/")
+        return render(request, "shop/login.html", {"form": form, "cart": self.cart})

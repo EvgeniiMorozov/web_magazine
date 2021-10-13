@@ -1,7 +1,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#">Online Store</a>
+        <a class="navbar-brand" href="{% url 'base' %}">Online Store</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -28,7 +28,7 @@
                         </li>
                         {% for category in categories %}
                         <li>
-                            <a class="dropdown-item" href="{{ category.get_absolute_url }}">
+                            <a class="dropdown-item" href="{{ category.url }}">
                                 {{ category.name }}
                             </a>
                         </li>
@@ -43,7 +43,7 @@
                 <!-- *** Not-authorized_user block (Start) *** -->
                 {% if not request.user.is_authenticated %}
                 <div class="btn-group" role="group">
-                        <a class="btn btn-outline-dark" href="#">Авторизация</a>
+                        <a class="btn btn-outline-dark" href="{% url 'login' %}">Авторизация</a>
                         <a class="btn btn-outline-dark" href="#">Регистрация</a>
                 </div>
 
