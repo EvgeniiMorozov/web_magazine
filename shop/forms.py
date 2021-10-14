@@ -31,7 +31,7 @@ class LoginForm(forms.ModelForm):
         self.fields["password"].label = "Пароль"
 
     def clean(self):
-        # super().clean()
+
         username = self.cleaned_data["username"]
         password = self.cleaned_data["password"]
 

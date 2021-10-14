@@ -7,7 +7,7 @@ from django.views.generic import DetailView, View
 
 from shop.forms import OrderForm, LoginForm, RegistrationForm
 from shop.mixins import CartMixin
-from shop.models import Category, CartProduct, Customer, Product
+from shop.models import Category, CartProduct, Customer, Product, Order
 from shop.utils import recalculate_cart
 
 
@@ -170,3 +170,12 @@ class RegistrationView(CartMixin, View):
 
         context = {"form": form, "cart": self.cart}
         return render(request, "shop/registration.html", context)
+
+
+class ProfileView(CartMixin, View):
+    def get(self, request, *args, **kwargs):
+        customer = Customer.objects.get(user=request.user)
+        orders = Order.objects.filter(customer=customer).order_by("-created_at")
+        categories = Category.objects.all()
+        context = {"orders": orders, "categories": categories, "cart": self.cart}
+        return render(request, "shop/profile.html", context)

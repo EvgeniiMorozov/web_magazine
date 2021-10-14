@@ -73,11 +73,18 @@
                     </button>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Личный кабинет</a></li>
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">Личный кабинет</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="{% url 'cart' %}">Корзина</a></li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'cart' %}">
+                                Корзина&nbsp
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">
+                                    {{ cart.products.count }}
+                                </span>
+                            </a>
+                        </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
