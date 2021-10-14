@@ -34,15 +34,7 @@ crispy-bootstrap5==0.6
 
 django-crispy-forms==1.13.0; python_version >= '3.6'
 
-django-stubs-ext==0.3.1; python_version >= '3.6'
-
-django-stubs==1.9.0
-
 django==3.2.8
-
-flake8-django-migrations==0.1.1
-
-flake8-django==1.1.2
 
 flake8==3.9.2
 
