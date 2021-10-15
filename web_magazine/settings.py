@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "shop",
     "crispy_forms",
     "crispy_bootstrap5",
+    "specs",
 ]
 
 MIDDLEWARE = [
@@ -74,24 +75,24 @@ WSGI_APPLICATION = "web_magazine.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db_stage_2.sqlite3",
-#     }
-# }
-
-# PostgreSQL
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": getenv("PSQL_DB_NAME"),
-        "USER": getenv("PSQL_DB_USER"),
-        "PASSWORD": getenv("PSQL_DB_PASS"),
-        "HOST": "127.0.0.1",
-        "PORT": 5433,
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db_stage_2.sqlite3",
     }
 }
+
+# PostgreSQL
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": getenv("PSQL_DB_NAME"),
+#         "USER": getenv("PSQL_DB_USER"),
+#         "PASSWORD": getenv("PSQL_DB_PASS"),
+#         "HOST": "127.0.0.1",
+#         "PORT": 5433,
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
