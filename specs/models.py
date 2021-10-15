@@ -20,7 +20,7 @@ class CategoryFeature(models.Model):
 
 class FeatureValidator(models.Model):
     """
-    Валидатор значений для конкретной характеристики принадлежащей к конкретной категории
+    Валидатор значений для конкретной характеристики, принадлежащей к конкретной категории
     """
 
     category = models.ForeignKey("shop.Category", verbose_name="Категория", on_delete=models.CASCADE)
