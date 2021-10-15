@@ -11,37 +11,43 @@
 
 <body>
 
-    <div class="container">
-        <h3 class="text-center">Админка характеристик</h3>
-        <hr>
+<div class="container">
+    <h3 class="text-center">Админка характеристик</h3>
+    <hr>
 
-        <div class="row">
-            <!--Меню навигации-->
-            <div class="col-md-4">
-                <div class="list-group">
-                    <a href="{% url 'new_category' %}"
-                        class="list-group-item action {% if request.path == "/product-specs/new-category/" %}active{% endif %}">
-                        Создать новую категорию
-                    </a>
-                    <a href="{% url 'new_feature' %}"
-                        class="list-group-item action {% if request.path == "/product-specs/new-feature/" %}active{% endif %}">
-                        Создать новую характеристику
-                    </a>
-                    <a href="#" class="list-group-item action">Создать значение</a>
-                    <a href="#" class="list-group-item action">Создать характеристику для товара</a>
-                    <a href="#" class="list-group-item action">Редактировать характеристики товара</a>
-                </div>
+    <div class="row">
+        <!--Меню навигации-->
+        <div class="col-md-4">
+            <div class="list-group">
+                <a href="{% url 'new_category' %}"
+                   class="list-group-item list-group-item-action {% if request.path == "/product-specs/new-category/" %}active{% endif %}"
+                   aria-current="true">
+                    Создать новую категорию
+                </a>
+                <a href="{% url 'new_feature' %}"
+                   class="list-group-item list-group-item-action {% if request.path == "/product-specs/new-feature/" %}active{% endif %}"
+                   aria-current="true">
+                    Создать новую характеристику
+                </a>
+                <a href="{% url 'new_validator' %}"
+                   class="list-group-item list-group-item-action {% if request.path == "/product-specs/new-validator/" %}active{% endif %}"
+                   aria-current="true">
+                    Создать значение характеристики
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">Создать характеристику для товара</a>
+                <a href="#" class="list-group-item list-group-item-action">Редактировать характеристики товара</a>
             </div>
-
-            <!--Блок контента-->
-            <div class="col-md-8">
-                {% block content %}{% endblock %}
-            </div>
-
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <!--Блок контента-->
+        <div class="col-md-8">
+            {% block content %}{% endblock %}
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
