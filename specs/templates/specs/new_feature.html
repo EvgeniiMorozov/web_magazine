@@ -1,0 +1,15 @@
+{% extends 'specs/product_features.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<form action="{% url 'new_feature' %}" method="POST">
+
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class="btn btn-success mb-5" type="submit" value="Создать новую характеристику">
+
+</form>
+
+{% endblock  %}

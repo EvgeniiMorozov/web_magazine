@@ -19,8 +19,14 @@
             <!--Меню навигации-->
             <div class="col-md-4">
                 <div class="list-group">
-                    <a href="{% url 'new_category' %}" class="list-group-item action">Создать новую категорию</a>
-                    <a href="#" class="list-group-item action">Создать новую характеристику</a>
+                    <a href="{% url 'new_category' %}"
+                        class="list-group-item action {% if request.path == "/product-specs/new-category/" %}active{% endif %}">
+                        Создать новую категорию
+                    </a>
+                    <a href="{% url 'new_feature' %}"
+                        class="list-group-item action {% if request.path == "/product-specs/new-feature/" %}active{% endif %}">
+                        Создать новую характеристику
+                    </a>
                     <a href="#" class="list-group-item action">Создать значение</a>
                     <a href="#" class="list-group-item action">Создать характеристику для товара</a>
                     <a href="#" class="list-group-item action">Редактировать характеристики товара</a>
