@@ -48,8 +48,10 @@ class FeatureChoiceView(View):
             </select>
                     """
         feature_key_qs = CategoryFeature.objects.filter(category_id=int(request.GET.get("category_id")))
-        res_string = ""
-        for item in feature_key_qs:
-            res_string += option.format(value=item.feature_name, option_name=item.feature_name)
+        res_string = "".join(
+            option.format(value=item.feature_name, option_name=item.feature_name)
+            for item in feature_key_qs
+        )
+
         html_select = html_select.format(result=res_string)
         return JsonResponse({"result": html_select, "value": int(request.GET.get("category_id"))})
