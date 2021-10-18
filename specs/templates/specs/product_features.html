@@ -34,8 +34,13 @@
                    aria-current="true">
                     Создать значение характеристики
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">Создать характеристику для товара</a>
-                <a href="#" class="list-group-item list-group-item-action">Редактировать характеристики товара</a>
+                <a href="{% url 'new_product_feature' %}"
+                   class="list-group-item list-group-item-action {% if request.path == "/product-specs/new-product-feature/" %}active{% endif %}">
+                    Создать характеристику для товара
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    Редактировать характеристики товара
+                </a>
             </div>
         </div>
 
