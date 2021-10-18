@@ -93,3 +93,25 @@ class SearchProductAJAXView(View):
         category = Category.objects.get(id=int(category_id))
         products = list(Product.objects.filter(category=category, title__icontains=query).values())
         return JsonResponse({"result": products})
+
+
+class AttachNewFeatureToProduct(View):
+    def get(self, request, *args, **kwargs):
+        product = Product.objects.get(id=int(request.GET.get("product_id")))
+        existing_features = list({item.feature.feature_name for item in product.features.all()})
+        category_features = CategoryFeature.objects.filter(category=product.category).exclude(
+            feature_name__in=existing_features
+        )
+        option = '<option value="{value}">{option_name}</option>'
+        html_select = """
+            <select class="form-select" name="product-category-features" id="product-category-features-id" aria-label="Default select example">
+            <option selected>---</option>
+            {result}
+            </select>
+        """
+        result = "".join(
+            option.format(value=item.category.id, option_name=item.feature_name) for item in category_features
+        )
+
+        html_select = html_select.format(result=result)
+        return JsonResponse({"features": html_select})
