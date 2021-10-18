@@ -147,3 +147,10 @@ class CreateNewProductFeatureAJAXView(View):
         feature = ProductFeatures.objects.create(feature=category_feature, product=product, value=value)
         product.features.add(feature)
         return JsonResponse({"OK": "OK"})
+
+
+class UpdateProductFeaturesView(View):
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        context = {"categories": categories}
+        return render(request, "specs/update_product_features.html", context)
