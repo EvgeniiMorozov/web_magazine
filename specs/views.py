@@ -115,3 +115,23 @@ class AttachNewFeatureToProduct(View):
 
         html_select = html_select.format(result=result)
         return JsonResponse({"features": html_select})
+
+
+class ProductFeatureChoicesAjaxView(View):
+    def get(self, request, *args, **kwargs):
+        category = Category.objects.get(id=int(request.GET.get("category_id")))
+        feature_key = CategoryFeature.objects.get(
+            category=category, feature_name=request.GET.get("product_feature_name")
+        )
+        validators_qs = FeatureValidator.objects.filter(category=category, feature_key=feature_key)
+        option = '<option value="{value}">{option_name}</option>'
+        html_select = """
+                    <select class="form-select" name="product-category-features" id="product-category-features-id" aria-label="Default select example">
+                    <option selected>---</option>
+                    {result}
+                    </select>
+                """
+        result = "".join(option.format(value=item.id, option_name=item.valid_feature_value) for item in validators_qs)
+
+        html_select = html_select.format(result=result)
+        return JsonResponse({"features": html_select})
