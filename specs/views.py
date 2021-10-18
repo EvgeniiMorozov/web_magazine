@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import CreateView, ListView
 
-from shop.models import Category
+from shop.models import Category, Product
 from specs.forms import NewCategoryForm, NewCategoryFeatureKeyForm
 from specs.models import CategoryFeature, FeatureValidator
 
@@ -84,3 +84,12 @@ class NewProductFeatureView(View):
         categories = Category.objects.all()
         context = {"categories": categories}
         return render(request, "specs/new_product_feature.html", context)
+
+
+class SearchProductAJAXView(View):
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("query")
+        category_id = request.GET.get("category_id")
+        category = Category.objects.get(id=int(category_id))
+        products = list(Product.objects.filter(category=category, title__icontains=query).values())
+        return JsonResponse({"result": products})

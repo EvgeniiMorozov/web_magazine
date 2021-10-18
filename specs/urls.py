@@ -8,8 +8,8 @@ from specs.views import (
     CreateFeatureView,
     FeatureChoiceView,
     NewProductFeatureView,
+    SearchProductAJAXView,
 )
-
 
 urlpatterns = [
     path("", BaseSpecView.as_view(), name="base-spec"),
@@ -19,4 +19,5 @@ urlpatterns = [
     path("feature-choice/", FeatureChoiceView.as_view(), name="feature_choice"),
     path("feature-create/", CreateFeatureView.as_view(), name="create_feature"),
     path("new-product-feature/", NewProductFeatureView.as_view(), name="new_product_feature"),
+    path("search-product/", SearchProductAJAXView.as_view(), name="search_product"),
 ]
