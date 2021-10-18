@@ -35,10 +35,13 @@
                     Создать значение характеристики
                 </a>
                 <a href="{% url 'new_product_feature' %}"
-                   class="list-group-item list-group-item-action {% if request.path == "/product-specs/new-product-feature/" %}active{% endif %}">
+                   class="list-group-item list-group-item-action {% if request.path == "/product-specs/new-product-feature/" %}active{% endif %}"
+                   aria-current="true">
                     Создать характеристику для товара
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">
+                <a href="{% url 'update_product_features' %}"
+                   class="list-group-item list-group-item-action {% if request.path == "/product-specs/update_product_features/" %}active{% endif %}"
+                   aria-current="true">
                     Редактировать характеристики товара
                 </a>
             </div>
