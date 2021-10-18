@@ -77,3 +77,10 @@ class CreateFeatureView(View):
             f'в категории "{category.name}" успешно создано',
         )
         return JsonResponse({"result": "OK"})
+
+
+class NewProductFeatureView(View):
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        context = {"categories": categories}
+        return render(request, "specs/new_product_feature.html", context)
