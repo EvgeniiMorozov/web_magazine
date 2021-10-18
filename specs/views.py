@@ -6,7 +6,7 @@ from django.views.generic import CreateView, ListView
 
 from shop.models import Category, Product
 from specs.forms import NewCategoryForm, NewCategoryFeatureKeyForm
-from specs.models import CategoryFeature, FeatureValidator
+from specs.models import CategoryFeature, FeatureValidator, ProductFeatures
 
 
 class BaseSpecView(View):
@@ -135,3 +135,15 @@ class ProductFeatureChoicesAjaxView(View):
 
         html_select = html_select.format(result=result)
         return JsonResponse({"features": html_select})
+
+
+class CreateNewProductFeatureAJAXView(View):
+    def get(self, request, *args, **kwargs):
+        product = Product.objects.get(title=request.GET.get("product"))
+        category_feature = CategoryFeature.objects.get(
+            category=product.category, feature_name=request.GET.get("category_feature")
+        )
+        value = request.GET.get("value")
+        feature = ProductFeatures.objects.create(feature=category_feature, product=product, value=value)
+        product.features.add(feature)
+        return JsonResponse({"OK": "OK"})
