@@ -5,6 +5,7 @@ from specs.views import (
     CreateNewCategoryView,
     CreateNewFeatureView,
     CreateNewFeatureValidator,
+    CreateFeatureView,
     FeatureChoiceView,
 )
 
@@ -15,4 +16,5 @@ urlpatterns = [
     path("new-feature/", CreateNewFeatureView.as_view(), name="new_feature"),
     path("new-validator/", CreateNewFeatureValidator.as_view(), name="new_validator"),
     path("feature-choice/", FeatureChoiceView.as_view(), name="feature_choice"),
+    path('feature-create/', CreateFeatureView.as_view(), name='create_feature'),
 ]
