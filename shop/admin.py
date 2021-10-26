@@ -5,6 +5,7 @@ from shop.models import Category, Customer, Cart, CartProduct, Order, Product
 
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
+    change_form_template = "shop/custom_admin/change_form.html"
 
 
 admin.site.register(Category)
