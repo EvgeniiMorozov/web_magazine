@@ -1,3 +1,4 @@
+from collections import defaultdict
 from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -154,3 +155,84 @@ class UpdateProductFeaturesView(View):
         categories = Category.objects.all()
         context = {"categories": categories}
         return render(request, "specs/update_product_features.html", context)
+
+
+class ShowProductFeaturesforUpdate(View):
+    def get(self, request, *args, **kwargs):
+        product = Product.objects.get(id=int(request.GET.get("product_id")))
+        features_values_qs = product.features.all()
+        head = """
+            <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4 class="text-center">Характеристика</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 class="text-center">Текущее значение</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 class="text-center">Новое значение</h4>
+                    </div>
+                </div>
+            <div class="row">{}</div>
+            <div class="row">
+                <hr>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <p class='text-center'><button class="btn btn-success" id="save-updated-features">Сохранить</button></p>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+        """
+        option = "<option value='{value}'>{option_name}</option>"
+        select_values = """
+            <select class="form-select" name="feature-value" id="feature-value" aria-label="Default select example">
+                <option selected>---</option>
+                {result}
+            </select>
+        """
+        mid_res = ""
+        select_different_values_dict = defaultdict(list)
+
+        for item in features_values_qs:
+            fv_qs = FeatureValidator.objects.filter(category=item.product.category, feature_key=item.feature).values()
+            for fv in fv_qs:
+                if fv["valid_feature_value"] == item.value:
+                    continue
+                else:
+                    select_different_values_dict[fv["feature_key_id"].append(fv["valid_feature_value"])]
+
+            feature_field = "<input type='text' class='form-control' id='{id}' value='{value}' disabled/>"
+            current_feature_value = """
+                <div class="col-md-4 feature-current-value my-2">{}</div>
+            """
+            body_feature_field = """
+                <div class="col-md-4 feature-name my-2">{}</div>
+            """
+            body_feature_field_value = """
+                <div class="col-md-4 feature-new-value my-2">{}</div>
+            """
+            body_feature_field = body_feature_field.format(
+                feature_field.format(id=item.feature.id, value=item.feature.feature_name)
+            )
+
+            current_feature_value_mid_res = "".join(
+                option.format(value=item.feature.id, option_name=element)
+                for element in select_different_values_dict[item.feature.id]
+            )
+
+            body_feature_field_value = body_feature_field_value.format(
+                select_values.format(item.feature.id, result=current_feature_value_mid_res)
+            )
+
+            current_feature_value = current_feature_value.format(
+                feature_field.format(id=item.feature.id, value=item.value)
+            )
+
+            data = body_feature_field + current_feature_value + body_feature_field_value
+            mid_res += data
+
+        result = head.format(mid_res)
+        return JsonResponse({"result": result})
