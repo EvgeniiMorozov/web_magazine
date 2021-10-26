@@ -236,3 +236,38 @@ class ShowProductFeaturesforUpdate(View):
 
         result = head.format(mid_res)
         return JsonResponse({"result": result})
+
+
+class UpdateProductFeaturesAJAXView(View):
+    def post(self, request, *args, **kwargs):
+        features_names = request.POST.getlist("features_names")
+        features_current_values = request.POST.getlist("features_current_values")
+        new_features_values = request.POST.getlist("new_features_values")
+
+        data_for_update = [
+            {"feature_name": name, "current_value": curr_value, "new_value": new_value}
+            for name, curr_value, new_value in zip(features_names, features_current_values, new_features_values)
+        ]
+
+        product = Product.objects.get(title=request.POST.get("product"))
+
+        for item in product.features.all():
+            for item_for_update in data_for_update:
+                if (
+                    item.feature.feature_name == item_for_update["feature_name"]
+                    and item.value != item_for_update["new_value"]
+                    and item_for_update["new_value"] != "---"
+                ):
+                    cf = CategoryFeature.objects.get(
+                        category=product.category, feature_name=item_for_update["feature_name"]
+                    )
+                    item.value = FeatureValidator.objects.get(
+                        category=product.category, feture_key=cf, valid_feature_value=item_for_update["new_value"]
+                    ).valid_feature_value
+
+                    item.save()
+
+        messages.add_message(
+            request, messages.SUCCESS, f"Значения характеристик для товара {product.title} успешно обновлены"
+        )
+        return JsonResponse({"result": "ok"})

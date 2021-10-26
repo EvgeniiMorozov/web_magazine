@@ -14,6 +14,7 @@ from specs.views import (
     CreateNewProductFeatureAJAXView,
     UpdateProductFeaturesView,
     ShowProductFeaturesforUpdate,
+    UpdateProductFeaturesAJAXView,
 )
 
 urlpatterns = [
@@ -34,4 +35,5 @@ urlpatterns = [
         ShowProductFeaturesforUpdate.as_view(),
         name="show_product_features_for_update",
     ),
+    path("update-product-features-ajax/", UpdateProductFeaturesAJAXView.as_view(), name="update_product_features_ajax"),
 ]
