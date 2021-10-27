@@ -13,10 +13,6 @@ from shop.utils import recalculate_cart
 from specs.models import ProductFeatures
 
 
-class MyQ(Q):
-    default = "OR"
-
-
 class BaseView(CartMixin, View):
     def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
