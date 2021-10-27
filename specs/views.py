@@ -203,7 +203,7 @@ class ShowProductFeaturesForUpdate(View):
                 if fv["valid_feature_value"] == item.value:
                     continue
                 else:
-                    select_different_values_dict[fv["feature_key_id"].append(fv["valid_feature_value"])]
+                    select_different_values_dict[fv["feature_key_id"]].append(fv["valid_feature_value"])
 
             feature_field = "<input type='text' class='form-control' id='{id}' value='{value}' disabled/>"
             current_feature_value = """
