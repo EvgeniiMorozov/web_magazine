@@ -9,21 +9,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <title>{% block title %}Online Store{% endblock %}</title>
-{#    <style>#}
-{#        .bd-placeholder-img {#}
-{#            font-size: 1.125rem;#}
-{#            text-anchor: middle;#}
-{#            -webkit-user-select: none;#}
-{#            -moz-user-select: none;#}
-{#            user-select: none;#}
-{#        }#}
-{##}
-{#        @media (min-width: 768px) {#}
-{#            .bd-placeholder-img-lg {#}
-{#                font-size: 3.5rem;#}
-{#            }#}
-{#        }#}
-{#    </style>#}
+    {#    <style>#}
+    {#        .bd-placeholder-img {#}
+    {#            font-size: 1.125rem;#}
+    {#            text-anchor: middle;#}
+    {#            -webkit-user-select: none;#}
+    {#            -moz-user-select: none;#}
+    {#            user-select: none;#}
+    {#        }#}
+    {##}
+    {#        @media (min-width: 768px) {#}
+    {#            .bd-placeholder-img-lg {#}
+    {#                font-size: 3.5rem;#}
+    {#            }#}
+    {#        }#}
+    {#    </style>#}
 </head>
 
 <body>
@@ -35,18 +35,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-{#                    <ul class="nav flex-column">#}
-{#                        {% for category in categories %}#}
-{#                            <li class="nav-item">#}
-{#                                <a class="nav-link" href="{{ category.url }}">{{ category.name }}#}
-{#                                    ({{ category.count }})</a>#}
-{#                            </li>#}
-{#                        {% endfor %}#}
-{#                    </ul>#}
+                    {#                    <ul class="nav flex-column">#}
+                    {#                        {% for category in categories %}#}
+                    {#                            <li class="nav-item">#}
+                    {#                                <a class="nav-link" href="{{ category.url }}">{{ category.name }}#}
+                    {#                                    ({{ category.count }})</a>#}
+                    {#                            </li>#}
+                    {#                        {% endfor %}#}
+                    {#                    </ul>#}
                 </div>
                 <div class="col-md-9">
 
-                <!--- Блок вывода информации (messages) -->
+                    <!--- Блок вывода информации (messages) -->
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -56,11 +56,11 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-                <!--- Конец блока вывода информации (messages) -->
+                    <!--- Конец блока вывода информации (messages) -->
 
-                <!-- *** Блок "Content" *** -->
+                    <!-- *** Блок "Content" *** -->
                     {% block content %}{% endblock %}
-                <!-- *** Блок "Content" *** -->
+                    <!-- *** Блок "Content" *** -->
 
                     <!--- Блок карточек -->
                     <div class="row mt-5">

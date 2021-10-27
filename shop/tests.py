@@ -1,12 +1,12 @@
 from decimal import Decimal
-from django.test import TestCase, Client, RequestFactory
+
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase, RequestFactory
 
 from shop.models import Category, Notebook, Cart, CartProduct, Customer
 from shop.utils import recalculate_cart
 from shop.views import AddToCartView
-
 
 User = get_user_model()
 

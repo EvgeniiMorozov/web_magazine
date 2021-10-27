@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import fields
 
 from shop.models import Category
 from specs.models import CategoryFeature

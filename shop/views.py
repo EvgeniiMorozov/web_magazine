@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic import DetailView, View
 
 from shop.forms import OrderForm, LoginForm, RegistrationForm
@@ -81,8 +81,8 @@ class CategoryDetailView(CartMixin, DetailView):
 
         pf = (
             ProductFeatures.objects.filter(q_condition_queries)
-            .prefetch_related("product", "feature")
-            .values("product_id")
+                .prefetch_related("product", "feature")
+                .values("product_id")
         )
         products = Product.objects.filter(id__in=[element["product_id"] for element in pf])
         context["category_products"] = products

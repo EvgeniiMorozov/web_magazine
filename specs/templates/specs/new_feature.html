@@ -4,12 +4,12 @@
 
 {% block content %}
 
-<form action="{% url 'new_feature' %}" method="POST">
+    <form action="{% url 'new_feature' %}" method="POST">
 
-    {% csrf_token %}
-    {{ form|crispy }}
-    <input class="btn btn-success mb-5" type="submit" value="Создать новую характеристику">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input class="btn btn-success mb-5" type="submit" value="Создать новую характеристику">
 
-</form>
+    </form>
 
-{% endblock  %}
+{% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 from shop.models import Order
 
@@ -11,6 +11,7 @@ class OrderForm(forms.ModelForm):
         self.fields["order_date"].label = "Дата получения заказа"
 
     order_date = forms.DateField(widget=forms.TextInput(attrs={"type": "date"}))
+
     # comment = forms.CharField(widget=forms.Textarea(attrs={"rows": 2}))
 
     class Meta:

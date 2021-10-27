@@ -1,9 +1,10 @@
 from collections import defaultdict
+
 from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView
 
 from shop.models import Category, Product
 from specs.forms import NewCategoryForm, NewCategoryFeatureKeyForm
@@ -254,9 +255,9 @@ class UpdateProductFeaturesAJAXView(View):
         for item in product.features.all():
             for item_for_update in data_for_update:
                 if (
-                    item.feature.feature_name == item_for_update["feature_name"]
-                    and item.value != item_for_update["new_value"]
-                    and item_for_update["new_value"] != "---"
+                        item.feature.feature_name == item_for_update["feature_name"]
+                        and item.value != item_for_update["new_value"]
+                        and item_for_update["new_value"] != "---"
                 ):
                     cf = CategoryFeature.objects.get(
                         category=product.category, feature_name=item_for_update["feature_name"]

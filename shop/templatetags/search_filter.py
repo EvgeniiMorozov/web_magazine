@@ -5,7 +5,6 @@ from django.utils.safestring import mark_safe
 
 from specs.models import ProductFeatures
 
-
 register = template.Library()
 
 
@@ -15,10 +14,10 @@ def product_spec(category):
     feature_and_values = defaultdict(list)
     for product_feature in product_features:
         if (
-            product_feature.value
-            not in feature_and_values[
-                (product_feature.feature.feature_name, product_feature.feature.feature_filter_name)
-            ]
+                product_feature.value
+                not in feature_and_values[
+            (product_feature.feature.feature_name, product_feature.feature.feature_filter_name)
+        ]
         ):
             feature_and_values[
                 (product_feature.feature.feature_name, product_feature.feature.feature_filter_name)
@@ -39,4 +38,3 @@ def product_spec(category):
             mid_res += feature_name_html + "<hr>"
         res = search_filter_body.format(mid_res)
         return mark_safe(res)
-

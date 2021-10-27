@@ -2,20 +2,20 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
-{% block title %} Регистрация :: {{super.block}} {% endblock %}
+{% block title %} Регистрация :: {{ super.block }} {% endblock %}
 
 {% block content %}
 
-<div class="row" style="margin: 50px 0;">
-    <div class="col-md-6 offset-md-3">
-        <h3 class="text-center">Регистрация нового пользователя</h3>
-        <hr>
-        <form action="" method="POST">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <input type="submit" class="btn btn-success" value="Зарегистрироваться">
-        </form>
+    <div class="row" style="margin: 50px 0;">
+        <div class="col-md-6 offset-md-3">
+            <h3 class="text-center">Регистрация нового пользователя</h3>
+            <hr>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input type="submit" class="btn btn-success" value="Зарегистрироваться">
+            </form>
+        </div>
     </div>
-</div>
 
-{% endblock  %}
+{% endblock %}

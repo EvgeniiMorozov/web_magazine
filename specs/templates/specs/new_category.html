@@ -3,11 +3,11 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="col-md-12">
-    <form action="{% url 'new_category' %}" method="POST">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <input type="submit" class="btn btn-success mt-5" value="Создать новую категорию">
-    </form>
-</div>
-{% endblock  %}
+    <div class="col-md-12">
+        <form action="{% url 'new_category' %}" method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" class="btn btn-success mt-5" value="Создать новую категорию">
+        </form>
+    </div>
+{% endblock %}

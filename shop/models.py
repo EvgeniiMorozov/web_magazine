@@ -19,7 +19,6 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.CASCADE)
     title = models.CharField(max_length=255, verbose_name="Наименование")
     slug = models.SlugField(unique=True)
