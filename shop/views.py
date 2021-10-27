@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.db import transaction
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView, View
@@ -9,6 +10,10 @@ from shop.forms import OrderForm, LoginForm, RegistrationForm
 from shop.mixins import CartMixin
 from shop.models import Category, CartProduct, Customer, Product, Order
 from shop.utils import recalculate_cart
+
+
+class MyQ(Q):
+    default = "OR"
 
 
 class BaseView(CartMixin, View):
@@ -20,6 +25,7 @@ class BaseView(CartMixin, View):
 
 
 class ProductDetailView(CartMixin, DetailView):
+    model = Product
     context_object_name = "product"
     template_name = "shop/product_detail.html"
     slug_url_kwarg = "slug"
@@ -27,6 +33,7 @@ class ProductDetailView(CartMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["cart"] = self.cart
+        context["categories"] = self.get_object().category.__class__.objects.all()
         return context
 
 
