@@ -158,7 +158,7 @@ class UpdateProductFeaturesView(View):
         return render(request, "specs/update_product_features.html", context)
 
 
-class ShowProductFeaturesforUpdate(View):
+class ShowProductFeaturesForUpdate(View):
     def get(self, request, *args, **kwargs):
         product = Product.objects.get(id=int(request.GET.get("product_id")))
         features_values_qs = product.features.all()
