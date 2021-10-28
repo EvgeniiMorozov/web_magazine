@@ -1,4 +1,27 @@
 {% extends 'shop/base.html' %}
+{% load search_filter %}
+
+{% block productfilter %}
+
+    <form class="d-flex mt-3" action="{% url 'category_detail' slug=category.slug %}" method="get">
+        <input type="search" class="form-control me-2" name="search" placeholder="Поиск товара" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Поиск</button>
+    </form>
+
+    <hr>
+
+    <form action="{% url 'category_detail' slug=category.slug %}" method="get">
+        {{ category|product_spec }}
+
+        <p class="text-center">
+            <button class="btn btn-outline-success" type="submit">Поиск</button>
+            <button class="btn btn-outline-info" type="submit">Сброс</button>
+        </p>
+
+    </form>
+
+{% endblock %}
+
 
 {% block content %}
 
