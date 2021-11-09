@@ -8,6 +8,7 @@ django = "*"
 pillow = "*"
 crispy-bootstrap5 = "*"
 psycopg2-binary = "*"
+gunicorn = "*"
 
 [dev-packages]
 mypy = "*"
