@@ -154,7 +154,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+.env.db
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -308,7 +308,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+.env.db
 .venv
 env/
 venv/
