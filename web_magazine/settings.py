@@ -90,7 +90,7 @@ DATABASES = {
         "USER": getenv("DB_USER"),
         "PASSWORD": getenv("DB_PASS"),
         "HOST": getenv("DB_HOST"),
-        "PORT": int(getenv("DB_PORT")),
+        "PORT": 5432,
     }
 }
 
