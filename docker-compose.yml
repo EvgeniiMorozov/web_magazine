@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   magazine_db:
@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./docker/postgres_db/.env.postgres
+      - ./.env.django
     environment:
       POSTGRES_USER: DB_USER
       POSTGRES_PASSWORD: DB_PASS
