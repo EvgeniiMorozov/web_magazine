@@ -230,3 +230,4 @@ fabric.properties
 /.idea/misc.xml
 /.env.django
 /.env.db
+!/.env.postgres
